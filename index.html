@@ -198,11 +198,10 @@
             cursor: pointer;
         }
         .burger-menu-container {
-            position: absolute;
-            right: 5px; /* Posizionato a sinistra della scacchiera */
             display: flex;
             flex-direction: column;
             align-items: center;
+            margin-top: 20px; /* Spazio tra il pulsante e il menu burger */
         }
         .burger-menu {
             width: 30px;
@@ -220,7 +219,7 @@
         .menu-options {
             display: none;
             position: absolute;
-            bottom: 0px; /* Posizionato sotto il menu burger */
+            bottom: 10px; /* Posizionato sotto il menu burger */
             background-color: #fff;
             border: 1px solid #000;
             border-radius: 5px;
@@ -250,7 +249,7 @@
         Obiettivo del gioco è disporre i numeri sulla scacchiera in modo che le operazioni aritmetiche mostrate sulla scacchiera siano corrette.
     </div>
     <div class="bar-container">
-        <div class="bar-label">Tempo massimo disponibile</div>
+        <div class="bar-label">Tempo massimo disponibile per risolvere il puzzle</div>
         <div class="bar">
             <div class="bar-inner" id="timerBar"></div>
             <div class="timer-text" id="timerText">120 secondi</div>
@@ -270,22 +269,22 @@
         <div class="grid" id="gameBoard">
             <!-- Layout modificato con operatori + e = -->
         </div>
-        <div class="burger-menu-container">
-            <div class="burger-menu" id="burgerMenu">
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-            <div class="menu-options" id="menuOptions">
-                <div onclick="setLevel('Base')">Livello 1 (Base)</div>
-                <div onclick="setLevel('Medio')">Livello 2 (Medio)</div>
-                <div onclick="setLevel('Avanzato')">Livello 3 (Avanzato)</div>
-            </div>
-            <div class="choose-level-label">Scegli il Livello</div>
-        </div>
     </div>
     <div class="level-display" id="levelDisplay">Livello: Base</div>
     <button class="undo-button" id="undoButton" onclick="undoMove()">Annulla ultima mossa</button>
+    <div class="burger-menu-container">
+        <div class="burger-menu" id="burgerMenu">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="menu-options" id="menuOptions">
+            <div onclick="setLevel('Base')">Livello 1 (Base)</div>
+            <div onclick="setLevel('Medio')">Livello 2 (Medio)</div>
+            <div onclick="setLevel('Avanzato')">Livello 3 (Avanzato)</div>
+        </div>
+        <div class="choose-level-label">Scegli il Livello</div>
+    </div>
     <div class="message" id="message"></div>
     <div class="timeout-message" id="timeoutMessage">Tempo scaduto! Riprova con una nuova partita.</div>
     <button class="next-game-button" id="nextGameButton" onclick="startGame()">Prossima partita</button>
