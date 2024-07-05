@@ -400,10 +400,10 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'Medio':
                 return 3;
             case 'Avanzato':
-                return 5;
+                return 2;
             case 'Base':
             default:
-                return 1;
+                return 4;
         }
     }
 
