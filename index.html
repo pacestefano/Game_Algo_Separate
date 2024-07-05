@@ -11,7 +11,7 @@
             align-items: center;
             justify-content: flex-start;
             height: 100vh;
-            overflow: hidden; /* Inibisce lo scroll verticale */
+            overflow: hidden;
             margin: 0;
             background-color: #f0f8ff;
             padding: 20px;
@@ -84,8 +84,8 @@
         }
         .grid {
             display: grid;
-            grid-template-columns: 60px 20px 60px 20px 60px; /* Ridotto da 70px */
-            grid-template-rows: repeat(3, 60px); /* Ridotto da 70px */
+            grid-template-columns: 60px 20px 60px 20px 60px;
+            grid-template-rows: repeat(3, 60px);
             gap: 5px;
             transition: background-color 1s ease;
         }
@@ -95,7 +95,7 @@
             align-items: center;
             background-color: #f0f0f0;
             border: 1px solid #000;
-            font-size: 22px; /* Ridotto da 24px a 22px */
+            font-size: 22px;
             user-select: none;
             transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
         }
@@ -124,23 +124,23 @@
         }
         .message {
             margin-top: 20px;
-            font-size: 18px; /* Ridotto da 20px a 18px */
-            color: red; /* Modificato per il messaggio di superamento delle mosse */
+            font-size: 18px;
+            color: red;
         }
         .summary {
             margin-top: 20px;
-            font-size: 16px; /* Ridotto da 18px a 16px */
+            font-size: 16px;
             color: black;
         }
         table {
             width: 90%;
             border-collapse: collapse;
             margin-top: 20px;
-            font-size: 14px; /* Ridotto da 16px a 14px */
+            font-size: 14px;
         }
         th, td {
             border: 1px solid #000;
-            padding: 8px; /* Ridotto da 10px a 8px */
+            padding: 8px;
             text-align: center;
         }
         th {
@@ -150,7 +150,7 @@
             display: none;
             margin-top: 20px;
             padding: 10px 20px;
-            font-size: 16px; /* Ridotto da 18px a 16px */
+            font-size: 16px;
             background-color: #76c7c0;
             border: none;
             border-radius: 5px;
@@ -160,7 +160,7 @@
             display: none;
             margin-top: 20px;
             padding: 10px 20px;
-            font-size: 16px; /* Ridotto da 18px a 16px */
+            font-size: 16px;
             background-color: #f44336;
             border: none;
             border-radius: 5px;
@@ -179,15 +179,53 @@
             margin-top: 10px;
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #d3d3d3; /* Grigio chiaro all'inizio */
+            background-color: #d3d3d3;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: not-allowed;
         }
         .undo-button.active {
-            background-color: #4caf50; /* Verde dopo la prima mossa */
+            background-color: #4caf50;
             cursor: pointer;
+        }
+        .burger-menu {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            cursor: pointer;
+        }
+        .burger-menu div {
+            width: 100%;
+            height: 4px;
+            background-color: #000;
+        }
+        .menu-options {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background-color: #fff;
+            border: 1px solid #000;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .menu-options div {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .menu-options div:hover {
+            background-color: #f0f0f0;
+        }
+        .level-display {
+            margin-top: 20px;
+            font-size: 18px;
+            color: black;
         }
     </style>
 </head>
@@ -215,12 +253,24 @@
     <div class="grid" id="gameBoard">
         <!-- Layout modificato con operatori + e = -->
     </div>
+    <div class="level-display" id="levelDisplay">Livello: Base</div>
+    <button class="undo-button" id="undoButton" onclick="undoMove()">Annulla ultima mossa</button>
     <div class="message" id="message"></div>
     <div class="timeout-message" id="timeoutMessage">Tempo scaduto! Riprova con una nuova partita.</div>
     <button class="next-game-button" id="nextGameButton" onclick="startGame()">Prossima partita</button>
-    <button class="retry-button" id="retryButton" onclick="startGame()">Riprova... avvia una nuova partita!</button>
-    <button class="undo-button" id="undoButton" onclick="undoMove()">Annulla ultima mossa</button>
+    <button class="retry-button" id="retryButton" onclick="location.reload()">Riprova... avvia una nuova partita!</button>
     <div class="summary" id="summary"></div>
+
+    <div class="burger-menu" id="burgerMenu">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="menu-options" id="menuOptions">
+        <div onclick="setLevel('Base')">Livello 1 (Base)</div>
+        <div onclick="setLevel('Medio')">Livello 2 (Medio)</div>
+        <div onclick="setLevel('Avanzato')">Livello 3 (Avanzato)</div>
+    </div>
 
     <!-- Effetti sonori -->
     <audio id="moveSound" src="move.mp3" preload="auto"></audio>
