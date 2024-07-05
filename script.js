@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const timeoutMessage = document.getElementById('timeoutMessage');
     const moveSound = document.getElementById('moveSound');
     const winSound = document.getElementById('winSound');
-    const timeoutSound = document.getElementById('timeoutSound');
     const loseSound = document.getElementById('loseSound');
     const undoButton = document.getElementById('undoButton');
     const burgerMenu = document.getElementById('burgerMenu');
@@ -33,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let moveHistory = [];
     let gameOver = false;
     let currentLevel = 'Base';
-
     const MAX_GAMES = 3;
 
     burgerMenu.addEventListener('click', () => {
@@ -43,9 +41,32 @@ document.addEventListener('DOMContentLoaded', () => {
     window.setLevel = function setLevel(level) {
         currentLevel = level;
         levelDisplay.textContent = `Livello: ${level}`;
+        updateLevelColor(level);
         menuOptions.style.display = 'none';
+        resetTimer();
         startGame();
     };
+
+    function updateLevelColor(level) {
+        switch (level) {
+            case 'Medio':
+                levelDisplay.style.color = 'orange';
+                break;
+            case 'Avanzato':
+                levelDisplay.style.color = 'red';
+                break;
+            case 'Base':
+            default:
+                levelDisplay.style.color = 'black';
+                break;
+        }
+    }
+
+    function resetTimer() {
+        clearInterval(timerInterval);
+        timerText.textContent = '120 secondi';
+        timerBar.style.width = '100%';
+    }
 
     function startGame() {
         console.log("Starting game..."); // Debug
@@ -363,6 +384,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 gameIndex++;
                 if (gameIndex < MAX_GAMES) {
+                    currentLevel = getNextLevel(currentLevel);
+                    updateLevelColor(currentLevel);
                     setTimeout(startGame, 1000);
                 } else {
                     showSummary();
@@ -390,7 +413,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (retryButton) retryButton.style.display = 'block';
                 gameOver = true;
 
-                timeoutSound.play();
+                // Rimuovere il feedback sonoro del timeout
+                // timeoutSound.play();
             }
         }, 1000);
     }
@@ -407,9 +431,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function getNextLevel(currentLevel) {
+        switch (currentLevel) {
+            case 'Base':
+                return 'Medio';
+            case 'Medio':
+                return 'Avanzato';
+            case 'Avanzato':
+                return 'Base';
+            default:
+                return 'Base';
+        }
+    }
+
     document.body.addEventListener('touchmove', (e) => {
         e.preventDefault();
     }, { passive: false });
 
+    // Iniziare il gioco con il livello Base
+    updateLevelColor(currentLevel);
     startGame();
 });
