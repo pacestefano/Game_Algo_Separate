@@ -19,6 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const timeoutSound = document.getElementById('timeoutSound');
     const loseSound = document.getElementById('loseSound');
     const undoButton = document.getElementById('undoButton');
+    const burgerMenu = document.getElementById('burgerMenu');
+    const menuOptions = document.getElementById('menuOptions');
+    const levelDisplay = document.getElementById('levelDisplay');
 
     let moveCount = 0;
     let timerInterval;
@@ -29,8 +32,20 @@ document.addEventListener('DOMContentLoaded', () => {
     let totalMoves;
     let moveHistory = [];
     let gameOver = false;
+    let currentLevel = 'Base';
 
     const MAX_GAMES = 3;
+
+    burgerMenu.addEventListener('click', () => {
+        menuOptions.style.display = menuOptions.style.display === 'block' ? 'none' : 'block';
+    });
+
+    window.setLevel = function setLevel(level) {
+        currentLevel = level;
+        levelDisplay.textContent = `Livello: ${level}`;
+        menuOptions.style.display = 'none';
+        startGame();
+    };
 
     function startGame() {
         console.log("Starting game..."); // Debug
@@ -63,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let shuffledNumbers = shuffle(numbers);
         console.log("Generated numbers:", numbers); // Debug
 
-        const minMoves = calculateMinMoves(shuffledNumbers);
+        const minMoves = getMinMovesForLevel(currentLevel);
         if (minMovesCounter) minMovesCounter.textContent = minMoves;
         totalMoves = minMoves;
         for (let i = 0; i < minMoves; i++) {
@@ -378,6 +393,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 timeoutSound.play();
             }
         }, 1000);
+    }
+
+    function getMinMovesForLevel(level) {
+        switch (level) {
+            case 'Medio':
+                return 3;
+            case 'Avanzato':
+                return 5;
+            case 'Base':
+            default:
+                return 1;
+        }
     }
 
     document.body.addEventListener('touchmove', (e) => {
